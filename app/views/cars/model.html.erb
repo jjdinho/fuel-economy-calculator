@@ -1,0 +1,24 @@
+<h1>model</h1>
+
+<%= params[:year] %>
+<%= params[:make] %>
+
+
+<% @models.each do |model| %>
+  <p><%= model %></p>
+<% end %>
+
+
+<!-- <form action="/cars/model" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="form-group">
+    <label for="select">Make</label>
+    <select class="form-control" name="model" id="select">
+      <option selected>Choose...</option>
+      <% @models.each do |model| %>
+      <option value="<%= model %>"><%= model %></option>
+      <% end %>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form> -->

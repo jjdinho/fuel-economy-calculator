@@ -1,0 +1,94 @@
+<h1>Fuel Economy Calculator</h1>
+<form>
+  <div class="form-group">
+    <label for="year">Year</label>
+    <select class="form-control" id="year">
+      <option selected>year...</option>
+      <% @years.each do |year| %>
+        <option value="<%= year %>"><%= year %></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="make">Make</label>
+    <select class="form-control" id="make" disabled="true">
+      <option selected>make...</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="model">Model</label>
+    <select class="form-control" id="model" disabled="true">
+      <option selected>model...</option>
+    </select>
+  </div>
+  <button value="sumbit" id="submit" class="btn btn-primary">Submit</button>
+  <!-- select_tag "credit_card", options_for_select(@years), "", data: { url: 'cars/1985', remote: true } %> -->
+</form>
+
+<div id="results" style="margin-top: 20px">
+
+</div>
+
+<script>
+  const year = document.querySelector("#year");
+  const make = document.querySelector("#make");
+  const model = document.querySelector("#model");
+  const results = document.querySelector("#results");
+  const submit = document.querySelector("#submit");
+
+  const getMakes = (event) => {
+    make.innerHTML = "<option selected>make...</option>";
+    model.innerHTML = "<option selected>model...</option>";
+    make.removeAttribute("disabled");
+    model.setAttribute("disabled", "");
+    fetch(`cars/${year.value}`)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      data.forEach((car) => {
+        const item = `<option value="${car}">${car}</option>`
+        make.insertAdjacentHTML("beforeend", item);
+      });
+    });
+  }
+
+  year.addEventListener("change", getMakes)
+
+  const getModels = (event) => {
+    model.innerHTML = "<option selected>model...</option>";
+    model.removeAttribute("disabled");
+    fetch(`cars/${year.value}/${make.value}`)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      data.forEach((car) => {
+        const item = `<option value="${car}">${car}</option>`
+        model.insertAdjacentHTML("beforeend", item);
+      });
+    });
+  }
+
+  make.addEventListener("change", getModels)
+
+  const getCar = (event) => {
+    event.preventDefault();
+    fetch(`cars/${year.value}/${make.value}/${model.value}`)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+
+        const item = `<p>${data.year} ${data.make} ${data.model}</p>
+        <ul>
+          <li>MPG: ${data.mileage}</li>
+          <li>Cylinders: ${data.cylinders}</li>
+          <li>Liters: ${data.liters}</li>
+          <li>Drive: ${data.drive}</li>
+          <li>Transmission: ${data.trany}</li>
+        </ul>`
+        results.insertAdjacentHTML("beforeend", item);
+
+    });
+  }
+
+  submit.addEventListener("click", getCar)
+</script>

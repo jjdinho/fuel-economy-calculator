@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mileage: 1
+  cylinders: 1
+  liters: 1
+  drive: MyString
+  make: MyString
+  model: MyString
+  trany: MyString
+  year: 1
+
+two:
+  mileage: 1
+  cylinders: 1
+  liters: 1
+  drive: MyString
+  make: MyString
+  model: MyString
+  trany: MyString
+  year: 1
