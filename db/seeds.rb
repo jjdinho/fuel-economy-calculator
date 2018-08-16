@@ -8,10 +8,18 @@
 require 'csv'
 
 # Car.all.destroy
+start = Time.now
+puts 'Generating seed data...'
+puts 'This could take a while.'
 
-CSV.foreach(Rails.root.join('test.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('cars.csv'), headers: true) do |row|
   car = Car.new(mileage: row[0], cylinders: row[1], liters: row[2], drive: row[3], make: row[4], model: row[5], trany: row[6], year: row[7])
   car.save
 end
 
-puts "Created a database of #{Car.count} cars."
+finish = Time.now
+time = finish - start
+puts ''
+puts 'Finished.'
+puts ''
+puts "Created a database of #{Car.count} cars in #{time} seconds."

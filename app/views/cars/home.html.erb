@@ -72,6 +72,7 @@
 
   const getCar = (event) => {
     event.preventDefault();
+    results.innerHTML = "";
     fetch(`cars/${year.value}/${make.value}/${model.value}`)
     .then(response => response.json())
     .then((data) => {
