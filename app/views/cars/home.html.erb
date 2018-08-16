@@ -79,7 +79,6 @@
     fetch(`cars/${year.value}`)
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
       data.forEach((car) => {
         const item = `<option value="${car}">${car}</option>`
         make.insertAdjacentHTML("beforeend", item);
@@ -95,7 +94,6 @@
     fetch(`cars/${year.value}/${make.value}`)
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
       data.forEach((car) => {
         const item = `<option value="${car}">${car}</option>`
         model.insertAdjacentHTML("beforeend", item);
@@ -108,7 +106,7 @@
   const getCar = (event) => {
     event.preventDefault();
     results.innerHTML = "";
-    fetch(`cars/${year.value}/${make.value}/${model.value}`)
+    fetch(`cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}`)
     .then(response => response.json())
     .then((data) => {
       console.log(data)
