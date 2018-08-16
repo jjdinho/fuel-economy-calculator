@@ -10,7 +10,8 @@ require 'csv'
 # Car.all.destroy
 start = Time.now
 puts 'Generating seed data...'
-puts 'This could take a while.'
+puts ""
+puts 'This could take a few minutes.'
 
 CSV.foreach(Rails.root.join('cars.csv'), headers: true) do |row|
   car = Car.new(mileage: row[0], cylinders: row[1], liters: row[2], drive: row[3], make: row[4], model: row[5], trany: row[6], year: row[7])
@@ -19,7 +20,8 @@ end
 
 finish = Time.now
 time = finish - start
+minutes = (time / 60).floor
+seconds = (time % 60).round(2)
 puts ''
 puts 'Finished.'
-puts ''
-puts "Created a database of #{Car.count} cars in #{time} seconds."
+puts "Created a database of #{Car.count} cars in #{minutes} #{minutes == 1 ? 'minute' : 'minutes'} and #{seconds}."
