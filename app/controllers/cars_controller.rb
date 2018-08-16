@@ -3,11 +3,14 @@ require 'sqlite3'
 class CarsController < ApplicationController
 
   def year
-    cars = Car.select('year')
-    @years = cars.map do |car|
-      car.year
-    end
-    @years = @years.uniq.sort
+    # Not necessary for single page app with full database...
+
+    # cars = Car.select('year')
+    # @years = cars.map do |car|
+    #   car.year
+    # end
+    # @years = @years.uniq.sort
+
     # render json: @years, callback: 'yearsQuery'
   end
 
@@ -41,6 +44,7 @@ class CarsController < ApplicationController
   end
 
   def home
-    year
+    # 'year' method is not necessary for single page app with full database...
+    # year
   end
 end
