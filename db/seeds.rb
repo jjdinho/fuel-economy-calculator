@@ -7,7 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'csv'
 
-# Car.all.destroy
+Car.delete_all if Rails.env.development?
+
 start = Time.now
 puts 'Generating seed data...'
 puts ""
