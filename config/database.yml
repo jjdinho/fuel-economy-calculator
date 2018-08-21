@@ -17,7 +17,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: demo_test_development
+  database: fuel-economy-calculator_development
   pool: 5
   username: Jake Johnson
   password:
@@ -47,7 +47,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: demo_test_test
+  database: fuel-economy-calculator_test
   pool: 5
   username: Jake Johnson
   password:
