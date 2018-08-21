@@ -25,4 +25,4 @@ minutes = (time / 60).floor
 seconds = (time % 60).round(2)
 puts ''
 puts 'Finished.'
-puts "Created a database of #{Car.count} cars in #{minutes} #{minutes == 1 ? 'minute' : 'minutes'} and #{seconds}."
+puts "Created a database of #{Car.count} cars in #{minutes} #{minutes == 1 ? 'minute' : 'minutes'} and #{seconds} seconds."
