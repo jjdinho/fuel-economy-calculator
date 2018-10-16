@@ -15,20 +15,6 @@
 //= require turbolinks
 //= require_tree .
 
-// const year = document.querySelector("#year")
-// console.log(year)
-// const make = document.querySelector("#make")
+import 'ajaxQueries.js';
 
-// const getMakes = (event) => {
-//   fetch(`cars/${year.value}`)
-//   .then(response => response.json())
-//   .then((data) => {
-//     console.log(data)
-//     data.results.forEach((person) => {
-//       const item = `<li>${person.name}</li>`;
-//       people.insertAdjacentHTML("beforeend", item);
-//     });
-//   });
-// }
-
-// year.addEventListener("change", getMakes)
+listen();
