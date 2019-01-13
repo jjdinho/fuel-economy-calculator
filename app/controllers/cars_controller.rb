@@ -1,7 +1,6 @@
 require 'pg'
 
 class CarsController < ApplicationController
-
   def year
     # Not necessary for single page app with full database...
 
@@ -39,12 +38,23 @@ class CarsController < ApplicationController
     year = params[:year].to_i
     make = params[:make]
     model = params[:model]
+    miles = params[:miles].to_i
     @car = Car.find_by("year = ? AND make LIKE ? AND model LIKE ?", year, make, model)
-    render json: @car
+    @miles_info = calculate_mileage_info(@car, miles)
+    @result = {car: @car, fuel: @miles_info}
+    render json: @result
   end
 
   def home
     # 'year' method is not necessary for single page app with full database...
     # year
+  end
+
+  private
+
+  def calculate_mileage_info(car, miles)
+    world_trips = miles / 24901
+    gallons_consumed = miles / car.mileage
+    {trips: world_trips, gallons: gallons_consumed}
   end
 end

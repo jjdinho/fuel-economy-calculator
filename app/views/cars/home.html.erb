@@ -56,6 +56,10 @@
       <option selected>model...</option>
     </select>
   </div>
+  <div class="form-group">
+    <label for="miles">Miles</label>
+    <input type="number" min="0" step="1" id="miles" class="form-control">
+  </div>
   <button value="sumbit" id="submit" class="btn btn-primary">Submit</button>
   <!-- select_tag "credit_card", options_for_select(@years), "", data: { url: 'cars/1985', remote: true } %> -->
 </form>
@@ -68,6 +72,7 @@
   const year = document.querySelector("#year");
   const make = document.querySelector("#make");
   const model = document.querySelector("#model");
+  const miles = document.querySelector("#miles");
   const results = document.querySelector("#results");
   const submit = document.querySelector("#submit");
 
@@ -106,19 +111,38 @@
   const getCar = (event) => {
     event.preventDefault();
     results.innerHTML = "";
-    fetch(`cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}`)
+
+
+    if (!miles.value == "") {
+      // with miles data
+      var carURL = `cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}?miles=${miles.value}`
+    } else {
+      // without miles data
+      var carURL = `cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}`
+    }
+
+    fetch(carURL)
     .then(response => response.json())
     .then((data) => {
       console.log(data)
-
-        const item = `<p>${data.year} ${data.make} ${data.model}</p>
+        const car_data = `<p>${data.car.year} ${data.car.make} ${data.car.model}</p>
         <ul>
-          <li>MPG: ${data.mileage}</li>
-          <li>Cylinders: ${data.cylinders}</li>
-          <li>Liters: ${data.liters}</li>
-          <li>Drive: ${data.drive}</li>
-          <li>Transmission: ${data.trany}</li>
+          <li>MPG: ${data.car.mileage}</li>
+          <li>Cylinders: ${data.car.cylinders}</li>
+          <li>Liters: ${data.car.liters}</li>
+          <li>Drive: ${data.car.drive}</li>
+          <li>Transmission: ${data.car.trany}</li>
         </ul>`
+
+        if (!miles.value == "") {
+          var fuel_economy_data = `<p>Trips around the world: ${data.fuel.trips}</p>
+          <p>Gallons consumed: ${data.fuel.gallons}</p>`
+        } else {
+          var fuel_economy_data = "<p>Enter your car's mileage to see your fuel economy data.</p>"
+        }
+
+        const item = car_data + fuel_economy_data
+
         results.insertAdjacentHTML("beforeend", item);
 
     });
