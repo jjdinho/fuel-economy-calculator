@@ -34,14 +34,22 @@ class CarsController < ApplicationController
     render json: @models
   end
 
-  def result
-    year = params[:year].to_i
-    make = params[:make]
-    model = params[:model]
-    miles = params[:miles].to_i
-    @car = Car.find_by("year = ? AND make LIKE ? AND model LIKE ?", year, make, model)
-    @miles_info = calculate_mileage_info(@car, miles)
-    @result = {car: @car, fuel: @miles_info}
+  def get_info
+    if params[:year].nil? || params[:make].nil? || params[:model].nil?
+      @result = { error: 'Incorrect parameters. Please complete the form above.' }
+    else
+      year = params[:year].to_i
+      make = params[:make]
+      model = params[:model]
+      miles = params[:miles].to_i
+      @car = Car.find_by('year = ? AND make LIKE ? AND model LIKE ?', year, make, model)
+      if @car.nil?
+        @result = { error: 'Incorrect parameters. Please complete the form above.' }
+      else
+        @miles_info = calculate_mileage_info(@car, miles)
+        @result = { car: @car, fuel: @miles_info }
+      end
+    end
     render json: @result
   end
 

@@ -118,16 +118,18 @@
 
     if (!miles.value == "") {
       // with miles data
-      var carURL = `cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}?miles=${miles.value}`
+      var carURL = `api/get_info?year=${year.value}&make=${make.value}&model=${encodeURIComponent(model.value)}&miles=${miles.value}`
     } else {
       // without miles data
-      var carURL = `cars/${year.value}/${make.value}/${encodeURIComponent(model.value)}`
+      var carURL = `api/get_info?year=${year.value}&make=${make.value}&model=${encodeURIComponent(model.value)}`
     }
 
     fetch(carURL)
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
+      if (data.error) {
+        var item = `<p>${data.error}</p>`
+      } else {
         const car_data = `<p>${data.car.year} ${data.car.make} ${data.car.model}</p>
         <ul>
           <li>MPG: ${data.car.mileage}</li>
@@ -144,9 +146,10 @@
           var fuel_economy_data = "<p>Enter your car's mileage to see your fuel economy data.</p>"
         }
 
-        const item = car_data + fuel_economy_data
+        var item = car_data + fuel_economy_data
+      }
 
-        results.insertAdjacentHTML("beforeend", item);
+      results.insertAdjacentHTML("beforeend", item);
 
     });
   }
